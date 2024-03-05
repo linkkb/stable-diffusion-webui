@@ -12,6 +12,7 @@ from modules.generation_parameters_copypaste import image_from_url_text
 import modules.images
 from modules.ui_components import ToolButton
 import modules.generation_parameters_copypaste as parameters_copypaste
+from security import safe_command
 
 folder_symbol = '\U0001f4c2'  # 📂
 refresh_symbol = '\U0001f504'  # 🔄
@@ -124,11 +125,11 @@ Requested path was: {f}
             if platform.system() == "Windows":
                 os.startfile(path)
             elif platform.system() == "Darwin":
-                sp.Popen(["open", path])
+                safe_command.run(sp.Popen, ["open", path])
             elif "microsoft-standard-WSL2" in platform.uname().release:
-                sp.Popen(["wsl-open", path])
+                safe_command.run(sp.Popen, ["wsl-open", path])
             else:
-                sp.Popen(["xdg-open", path])
+                safe_command.run(sp.Popen, ["xdg-open", path])
 
     with gr.Column(elem_id=f"{tabname}_results"):
         if toprow:
