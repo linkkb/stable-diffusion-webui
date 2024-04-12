@@ -347,7 +347,7 @@ class EmbeddingsWithFixes(torch.nn.Module):
 
         inputs_embeds = self.wrapped(input_ids)
 
-        if batch_fixes is None or len(batch_fixes) == 0 or max([len(x) for x in batch_fixes]) == 0:
+        if batch_fixes is None or len(batch_fixes) == 0 or max(len(x) for x in batch_fixes) == 0:
             return inputs_embeds
 
         vecs = []

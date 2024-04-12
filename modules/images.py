@@ -173,7 +173,7 @@ def draw_grid_annotations(im, width, height, hor_texts, ver_texts, margin=0):
 
     fnt = get_font(fontsize)
 
-    pad_left = 0 if sum([sum([len(line.text) for line in lines]) for lines in ver_texts]) == 0 else width * 3 // 4
+    pad_left = 0 if sum(sum([len(line.text) for line in lines]) for lines in ver_texts) == 0 else width * 3 // 4
 
     cols = im.width // width
     rows = im.height // height
@@ -197,8 +197,8 @@ def draw_grid_annotations(im, width, height, hor_texts, ver_texts, margin=0):
             line.size = (bbox[2] - bbox[0], bbox[3] - bbox[1])
             line.allowed_width = allowed_width
 
-    hor_text_heights = [sum([line.size[1] + line_spacing for line in lines]) - line_spacing for lines in hor_texts]
-    ver_text_heights = [sum([line.size[1] + line_spacing for line in lines]) - line_spacing * len(lines) for lines in ver_texts]
+    hor_text_heights = [sum(line.size[1] + line_spacing for line in lines) - line_spacing for lines in hor_texts]
+    ver_text_heights = [sum(line.size[1] + line_spacing for line in lines) - line_spacing * len(lines) for lines in ver_texts]
 
     pad_top = 0 if sum(hor_text_heights) == 0 else max(hor_text_heights) + line_spacing * 2
 

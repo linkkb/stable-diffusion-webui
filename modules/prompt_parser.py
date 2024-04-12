@@ -307,7 +307,7 @@ def reconstruct_cond_batch(c: list[list[ScheduledPromptConditioning]], current_s
 def stack_conds(tensors):
     # if prompts have wildly different lengths above the limit we'll get tensors of different shapes
     # and won't be able to torch.stack them. So this fixes that.
-    token_count = max([x.shape[0] for x in tensors])
+    token_count = max(x.shape[0] for x in tensors)
     for i in range(len(tensors)):
         if tensors[i].shape[0] != token_count:
             last_vector = tensors[i][-1:]

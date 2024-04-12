@@ -411,7 +411,7 @@ def stack_conds(conds):
         return torch.stack(conds)
 
     # same as in reconstruct_multicond_batch
-    token_count = max([x.shape[0] for x in conds])
+    token_count = max(x.shape[0] for x in conds)
     for i in range(len(conds)):
         if conds[i].shape[0] != token_count:
             last_vector = conds[i][-1:]
