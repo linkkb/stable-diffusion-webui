@@ -310,7 +310,7 @@ class FrozenCLIPEmbedderWithCustomWords(FrozenCLIPEmbedderWithCustomWordsBase):
                 if c == ')':
                     mult /= 1.1
 
-            if mult != 1.0:
+            if not math.isclose(mult, 1.0, rel_tol=1e-09, abs_tol=0.0):
                 self.token_mults[ident] = mult
 
         self.id_start = self.wrapped.tokenizer.bos_token_id

@@ -60,7 +60,7 @@ def get_matched_noise(_np_src_image, np_mask_rgb, noise_q=1, color_variation=0.0
 
     def _get_masked_window_rgb(np_mask_grey, hardness=1.):
         np_mask_rgb = np.zeros((np_mask_grey.shape[0], np_mask_grey.shape[1], 3))
-        if hardness != 1.:
+        if not math.isclose(hardness, 1., rel_tol=1e-09, abs_tol=0.0):
             hardened = np_mask_grey[:] ** hardness
         else:
             hardened = np_mask_grey[:]

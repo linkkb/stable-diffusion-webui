@@ -1520,7 +1520,7 @@ class StableDiffusionProcessingImg2Img(StableDiffusionProcessing):
     def sample(self, conditioning, unconditional_conditioning, seeds, subseeds, subseed_strength, prompts):
         x = self.rng.next()
 
-        if self.initial_noise_multiplier != 1.0:
+        if not math.isclose(self.initial_noise_multiplier, 1.0, rel_tol=1e-09, abs_tol=0.0):
             self.extra_generation_params["Noise multiplier"] = self.initial_noise_multiplier
             x *= self.initial_noise_multiplier
 

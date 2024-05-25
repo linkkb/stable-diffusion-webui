@@ -25,6 +25,7 @@ import torch
 import torch.nn as nn
 import numpy as np
 from einops import rearrange
+import math
 
 
 class VectorQuantizer2(nn.Module):
@@ -87,7 +88,7 @@ class VectorQuantizer2(nn.Module):
         return back.reshape(ishape)
 
     def forward(self, z, temp=None, rescale_logits=False, return_logits=False):
-        assert temp is None or temp == 1.0, "Only for interface compatible with Gumbel"
+        assert temp is None or math.isclose(temp, 1.0, rel_tol=1e-09, abs_tol=0.0), "Only for interface compatible with Gumbel"
         assert rescale_logits is False, "Only for interface compatible with Gumbel"
         assert return_logits is False, "Only for interface compatible with Gumbel"
         # reshape z -> (batch, height, width, channel) and flatten
