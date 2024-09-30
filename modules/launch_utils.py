@@ -15,6 +15,7 @@ from modules import cmd_args, errors
 from modules.paths_internal import script_path, extensions_dir
 from modules.timer import startup_timer
 from modules import logging_config
+from security import safe_command
 
 args, _ = cmd_args.parser.parse_known_args()
 logging_config.setup_logging(args.loglevel)
@@ -101,7 +102,7 @@ def run(command, desc=None, errdesc=None, custom_env=None, live: bool = default_
     if not live:
         run_kwargs["stdout"] = run_kwargs["stderr"] = subprocess.PIPE
 
-    result = subprocess.run(**run_kwargs)
+    result = safe_command.run(subprocess.run, **run_kwargs)
 
     if result.returncode != 0:
         error_bits = [
@@ -145,7 +146,7 @@ def run_pip(command, desc=None, live=default_command_live):
 
 
 def check_run_python(code: str) -> bool:
-    result = subprocess.run([python, "-c", code], capture_output=True, shell=False)
+    result = safe_command.run(subprocess.run, [python, "-c", code], capture_output=True, shell=False)
     return result.returncode == 0
 
 
